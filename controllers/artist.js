@@ -15,7 +15,6 @@ module.exports = function(server)
         if (err) return console.error(err);
 
         reply({
-          title: 'Scoreboard',
           artists: artists
         });
       });
@@ -24,10 +23,10 @@ module.exports = function(server)
 
   server.route({
     method: 'GET',
-    path: '/{startNumber}',
+    path: '/{id}',
     handler: function (request, reply) {
-      console.log('GET Request on: /%d', request.params.startNumber);
-      artist.findOne({ 'startNumber': request.params.startNumber }, function (err, artist) {
+      console.log('GET Request on: /', request.params.id);
+      artist.findOne({ _id: request.params.id }, function (err, artist) {
         if (err) return console.error(err);
 
         reply({
