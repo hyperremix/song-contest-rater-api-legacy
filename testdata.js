@@ -1,0 +1,10 @@
+db.raters.ensureIndex({ "name": 1 }, { unique: true });
+db.ratings.ensureIndex({ "artist_id": 1, "rater_id": 1}, {unique: true});
+db.artists.ensureIndex({ "name": 1 }, { unique: true });
+db.artists.save({ "name" : "Midnight Boy", "songName" : "Don't Say No", "startNumber" : 1 });
+db.artists.save({ "name" : "Caroline Wennergren", "songName" : "Black Swan", "startNumber" : 2 });
+db.artists.save({ "name" : "JTR", "songName" : "Building It Up", "startNumber" : 3 });
+db.artists.save({ "name" : "Hasse Andersson", "songName" : "Guld och gröna skogar", "startNumber" : 4 });
+db.artists.save({ "name" : "Dinah Nah", "songName" : "Make Me (La La La)", "startNumber" : 5 });
+db.artists.save({ "name" : "Annika Herlitz", "songName" : "Ett andetag", "startNumber" : 6 });
+db.artists.save({ "name" : "Måns Zelmerlöw", "songName" : "Heroes", "startNumber" : 7 });
