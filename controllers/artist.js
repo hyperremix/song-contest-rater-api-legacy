@@ -1,7 +1,8 @@
 'use strict';
 var hapi     = require('hapi'),
     mongoose = require('mongoose'),
-    artist   = mongoose.model('Artist');
+    artist   = mongoose.model('Artist'),
+    rating   = mongoose.model('Rating');
 
 module.exports = function(server)
 {
@@ -26,11 +27,17 @@ module.exports = function(server)
     path: '/{id}',
     handler: function (request, reply) {
       console.log('GET Request on: /', request.params.id);
+
       artist.findOne({ _id: request.params.id }, function (err, artist) {
         if (err) return console.error(err);
 
-        reply({
-          artist: artist
+        rating.find({ artist_id: artist.id }, function(err, ratings) {
+          if (err) return console.error(err);
+
+          reply({
+            artist: artist,
+            ratings: ratings
+          });
         });
       });
     }

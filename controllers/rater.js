@@ -1,7 +1,9 @@
 'use strict';
 var hapi     = require('hapi'),
+    joi      = require('joi'),
     mongoose = require('mongoose'),
-    rater   = mongoose.model('Rater');
+    rater    = mongoose.model('Rater'),
+    rating   = mongoose.model('Rating');
 
 module.exports = function(server)
 {
@@ -26,11 +28,17 @@ module.exports = function(server)
     path: '/raters/{id}',
     handler: function (request, reply) {
       console.log('GET Request on: /raters/', request.params.id);
+
       rater.findOne({ _id: request.params.id }, function (err, rater) {
         if (err) return console.error(err);
 
-        reply({
-          rater: rater
+        rating.find({ rater_id: rater.id }, function (err, ratings) {
+          if (err) return console.error(err);
+
+          reply({
+            rater: rater,
+            ratings: ratings
+          });
         });
       });
     }
@@ -41,14 +49,25 @@ module.exports = function(server)
     path: '/raters',
     handler: function (request, reply) {
       console.log('POST Request on: /raters');
+
       var newRater = new rater(request.payload.rater);
-       newRater.save(function (err, newRater) {
+
+      newRater.save(function (err, newRater) {
         if (err) return console.error(err);
 
         reply({
           rater: newRater
         });
       });
+    },
+    config: {
+      validate: {
+        payload: {
+          rater: {
+            name: joi.string().required()
+          }
+        }
+      }
     }
   });
 };
