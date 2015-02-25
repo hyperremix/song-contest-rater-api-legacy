@@ -4,6 +4,6 @@ var mongoose = require('mongoose'),
 
 var raterSchema = new Schema({
   name: String
-})
+});
 
 var rater = mongoose.model('Rater', raterSchema);
