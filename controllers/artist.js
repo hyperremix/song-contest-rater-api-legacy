@@ -8,7 +8,7 @@ module.exports = function(server)
 {
   server.route({
     method: 'GET',
-    path: '/',
+    path: '/artists',
     handler: function (request, reply) {
       console.log('GET Request on: /');
 
@@ -17,14 +17,14 @@ module.exports = function(server)
 
         reply({
           artists: artists
-        });
+        }).header('Access-Control-Allow-Origin', '*');
       });
     }
   });
 
   server.route({
     method: 'GET',
-    path: '/{id}',
+    path: '/artists/{id}',
     handler: function (request, reply) {
       console.log('GET Request on: /', request.params.id);
 
