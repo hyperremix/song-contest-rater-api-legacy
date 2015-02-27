@@ -3,7 +3,8 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var raterSchema = new Schema({
-  name: String
+  name: String,
+  ratings: [{type: Schema.Types.ObjectId, ref: 'Rating'}]
 });
 
 var rater = mongoose.model('Rater', raterSchema);

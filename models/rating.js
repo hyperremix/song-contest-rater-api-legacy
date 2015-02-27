@@ -3,8 +3,8 @@ var mongoose = require('mongoose'),
     Schema   = mongoose.Schema;
 
 var ratingSchema = new Schema({
-  artist_id: Schema.Types.ObjectId,
-  rater_id: Schema.Types.ObjectId,
+  artist: {type: Schema.Types.ObjectId, ref: 'Artist'},
+  rater: {type: Schema.Types.ObjectId, ref: 'Rater'},
   song: Number,
   singing: Number,
   show: Number,

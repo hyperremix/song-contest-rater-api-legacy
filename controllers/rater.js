@@ -13,7 +13,7 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('GET Request on: /raters');
 
-      var raters = rater.find(function (err, raters) {
+      var raters = rater.find().populate('ratings').exec(function (err, raters) {
         if (err) return console.error(err);
 
         reply({
@@ -27,18 +27,13 @@ module.exports = function(server)
     method: 'GET',
     path: '/raters/{id}',
     handler: function (request, reply) {
-      console.log('GET Request on: /raters/', request.params.id);
+      console.log('GET Request on: /raters/%s', request.params.id);
 
-      rater.findOne({ _id: request.params.id }, function (err, rater) {
+      rater.findOne({ _id: request.params.id }).populate('ratings').exec(function (err, rater) {
         if (err) return console.error(err);
 
-        rating.find({ rater_id: rater.id }, function (err, ratings) {
-          if (err) return console.error(err);
-
-          reply({
-            rater: rater,
-            ratings: ratings
-          });
+        reply({
+          rater: rater
         });
       });
     }
@@ -54,6 +49,8 @@ module.exports = function(server)
 
       newRater.save(function (err, newRater) {
         if (err) return console.error(err);
+
+        rater.ratings = [];
 
         reply({
           rater: newRater

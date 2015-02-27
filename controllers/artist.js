@@ -10,9 +10,9 @@ module.exports = function(server)
     method: 'GET',
     path: '/artists',
     handler: function (request, reply) {
-      console.log('GET Request on: /');
+      console.log('GET Request on: /artists');
 
-      var artists = artist.find(function (err, artists) {
+      var artists = artist.find().populate('ratings').exec(function (err, artists) {
         if (err) return console.error(err);
 
         reply({
@@ -26,18 +26,13 @@ module.exports = function(server)
     method: 'GET',
     path: '/artists/{id}',
     handler: function (request, reply) {
-      console.log('GET Request on: /', request.params.id);
+      console.log('GET Request on: /artists/%s', request.params.id);
 
-      artist.findOne({ _id: request.params.id }, function (err, artist) {
+      artist.findOne({ _id: request.params.id }).populate('ratings').exec(function (err, artist) {
         if (err) return console.error(err);
 
-        rating.find({ artist_id: artist.id }, function(err, ratings) {
-          if (err) return console.error(err);
-
-          reply({
-            artist: artist,
-            ratings: ratings
-          });
+        reply({
+          artist: artist
         });
       });
     }
