@@ -13,11 +13,15 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('GET Request on: /raters');
 
-      var raters = rater.find().populate('ratings').exec(function (err, raters) {
+      var raters = rater.find().populate('ratings').exec(function (err, doc) {
         if (err) return console.error(err);
 
-        reply({
-          raters: raters
+        rater.populate(doc, { path: 'ratings.artist', model: 'Artist' }, function(err, ratersWithArtists) {
+          if (err) return console.error(err);
+
+          reply({
+            raters: ratersWithArtists
+          }).header('Access-Control-Allow-Origin', '*');
         });
       });
     }
@@ -29,11 +33,15 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('GET Request on: /raters/%s', request.params.id);
 
-      rater.findOne({ _id: request.params.id }).populate('ratings').exec(function (err, rater) {
+      rater.findOne({ _id: request.params.id }).populate('ratings').exec(function (err, doc) {
         if (err) return console.error(err);
 
-        reply({
-          rater: rater
+        rater.populate(doc, { path: 'ratings.artist', model: 'Artist' }, function(err, raterWithArtists) {
+          if (err) return console.error(err);
+
+          reply({
+            rater: raterWithArtists
+          });
         });
       });
     }

@@ -12,12 +12,16 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('GET Request on: /artists');
 
-      var artists = artist.find().populate('ratings').exec(function (err, artists) {
+      var artists = artist.find().populate('ratings').exec(function (err, doc) {
         if (err) return console.error(err);
 
-        reply({
-          artists: artists
-        }).header('Access-Control-Allow-Origin', '*');
+        artist.populate(doc, { path: 'ratings.rater', model: 'Rater' }, function(err, artistsWithRaters) {
+          if (err) return console.error(err);
+
+          reply({
+            artists: artistsWithRaters
+          }).header('Access-Control-Allow-Origin', '*');
+        });
       });
     }
   });
@@ -28,11 +32,15 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('GET Request on: /artists/%s', request.params.id);
 
-      artist.findOne({ _id: request.params.id }).populate('ratings').exec(function (err, artist) {
+      artist.findOne({ _id: request.params.id }).populate('ratings').exec(function (err, doc) {
         if (err) return console.error(err);
 
-        reply({
-          artist: artist
+        artist.populate(doc, { path: 'ratings.rater', model: 'Rater' }, function(err, artistWithRaters) {
+          if (err) return console.error(err);
+
+          reply({
+            artist: artistWithRaters
+          }).header('Access-Control-Allow-Origin', '*');
         });
       });
     }
