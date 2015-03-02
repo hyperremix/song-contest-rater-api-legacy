@@ -37,7 +37,7 @@ module.exports = function(server)
 
         reply({
           ratings: ratings
-        });
+        }).header('Access-Control-Allow-Origin', '*');
       });
     }
   });
@@ -59,10 +59,10 @@ module.exports = function(server)
         rater.update( { _id: mongoose.Types.ObjectId(request.payload.rating.rater) }, addToSet, function(err, numberAffected) {
           if (err) return console.log(err);
         });
-        
+
         reply({
           rating: newRating
-        });
+        }).header('Access-Control-Allow-Origin', '*');
       });
     },
     config: {

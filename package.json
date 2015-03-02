@@ -5,8 +5,10 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "mongoose": "~3.8.23",
-    "hapi": "^8.2.0"
+    "bcryptjs": "^2.1.0",
+    "hapi": "^8.2.0",
+    "hapi-auth-basic": "^2.0.0",
+    "mongoose": "~3.8.23"
   },
   "description": "A web application written with nodejs for rating melodifestivalen and Eurovision Song Contest.",
   "main": "app.js",

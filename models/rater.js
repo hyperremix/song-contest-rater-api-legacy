@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 
 var raterSchema = new Schema({
   name: String,
+  password: String,
   ratings: [{type: Schema.Types.ObjectId, ref: 'Rating'}]
 });
 

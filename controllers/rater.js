@@ -41,38 +41,9 @@ module.exports = function(server)
 
           reply({
             rater: raterWithArtists
-          });
+          }).header('Access-Control-Allow-Origin', '*');
         });
       });
-    }
-  });
-
-  server.route({
-    method: 'POST',
-    path: '/raters',
-    handler: function (request, reply) {
-      console.log('POST Request on: /raters');
-
-      var newRater = new rater(request.payload.rater);
-
-      newRater.save(function (err, newRater) {
-        if (err) return console.error(err);
-
-        rater.ratings = [];
-
-        reply({
-          rater: newRater
-        });
-      });
-    },
-    config: {
-      validate: {
-        payload: {
-          rater: {
-            name: joi.string().required()
-          }
-        }
-      }
     }
   });
 };

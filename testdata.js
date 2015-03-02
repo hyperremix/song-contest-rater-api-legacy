@@ -8,4 +8,4 @@ db.artists.save({ "name" : "Hasse Andersson", "songName" : "Guld och gröna skog
 db.artists.save({ "name" : "Dinah Nah", "songName" : "Make Me (La La La)", "startNumber" : 5, "ratings": [] });
 db.artists.save({ "name" : "Annika Herlitz", "songName" : "Ett andetag", "startNumber" : 6, "ratings": [] });
 db.artists.save({ "name" : "Måns Zelmerlöw", "songName" : "Heroes", "startNumber" : 7, "ratings": [] });
-db.raters.save({ "name" : "Fredrik", "ratings": [] });
+db.raters.save({ "name" : "Fredrik", "password": "$2a$10$QBJQ66eViwKHUV1fB3I2s.kB5ZpHHai0ZQBRkKwQTKR79zikcVs16", "ratings": [] });
