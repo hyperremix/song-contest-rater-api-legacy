@@ -78,7 +78,8 @@ module.exports = function(server)
             clothes: joi.number().integer().max(15).default(0)
           }
         }
-      }
+      },
+      auth: 'bearer'
     }
   });
 };

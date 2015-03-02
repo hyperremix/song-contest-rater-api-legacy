@@ -2,35 +2,48 @@
 var hapi     = require('hapi'),
     joi      = require('joi'),
     mongoose = require('mongoose'),
-    basic    = require('hapi-auth-basic'),
     bcrypt   = require('bcryptjs'),
+    jwt      = require('jsonwebtoken'),
+    boom     = require('boom'),
     rater    = mongoose.model('Rater');
 
 module.exports = function(server)
 {
-  server.register(basic, function (err) {
+  server.route({
+    method: 'OPTIONS',
+    path: '/token',
+    handler: function (request, reply) {
+      console.log('OPTIONS Request on: /token');
 
-      server.auth.strategy('default', 'basic', { validateFunc: validate });
+      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD').header('Access-Control-Allow-Headers', 'content-type,x-requested-with,x-api-key,X-ACCOUNT-API-KEY,X-USER-API-KEY,account_api_key,user_api_key');
+    }
+  });
 
-      server.route({
-        method: 'GET',
-        path: '/login',
-        handler: function (request, reply) {
-          console.log('GET Request on: /login');
-          rater.findOne({name: request.auth.credentials.name}, function(err, rater) {
-            if (err) return console.error(err);
+  server.route({
+    method: 'POST',
+    path: '/token',
+    handler: function (request, reply) {
+      console.log('POST Request on: /token');
+      rater.findOne({name: request.payload.name}, function(err, doc) {
+        if (err) return console.error(err);
 
+        bcrypt.compare(request.payload.password, doc.password, function (err, result) {
+          if (err) return console.error(err);
+
+          if (!result) return reply(boom.unauthorized());
+
+          var token = jwt.sign({ name: request.payload.name }, 'thisisnotsecret', { expiresInMinutes: 1440 });
+
+          doc.token = token;
+          doc.save(function (err, docWithNewToken) {
+            if (err) console.error(err);
             reply({
-              rater: {
-                _id: rater._id
-              }
+              token: token
             }).header('Access-Control-Allow-Origin', '*');
           });
-        },
-        config: {
-          auth: 'default'
-        }
+        });
       });
+    }
   });
 
   server.route({
@@ -68,15 +81,5 @@ module.exports = function(server)
         }
       }
     }
-  });
-};
-
-var validate = function (name, password, callback) {
-  rater.findOne({name: name}, function(err, rater) {
-    if (err) return callback(null, false);
-
-    bcrypt.compare(password, rater.password, function (err, isValid) {
-        callback(err, isValid, { _id: rater._id, name: rater.name });
-    });
   });
 };
