@@ -1,8 +1,9 @@
 'use strict';
-var hapi   = require('hapi'),
-    fs     = require('fs'),
-    jwt    = require('jsonwebtoken'),
-    path   = require('path');
+var hapi     = require('hapi'),
+    fs       = require('fs'),
+    jwt      = require('jsonwebtoken'),
+    mongoose = require('mongoose'),
+    path     = require('path');
 
 module.exports = function(server) {
   var modelsPath = path.join(__dirname, '../models');

@@ -8,11 +8,21 @@ var hapi     = require('hapi'),
 module.exports = function(server)
 {
   server.route({
+    method: 'OPTIONS',
+    path: '/raters',
+    handler: function (request, reply) {
+      console.log('OPTIONS Request on: /raters');
+
+      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'GET, OPTIONS').header('Access-Control-Allow-Headers', 'Authorization,content-type,x-requested-with');
+    }
+  });
+
+  server.route({
     method: 'GET',
     path: '/raters',
     handler: function (request, reply) {
       console.log('GET Request on: /raters');
-
+      
       var raters = rater.find().populate('ratings').exec(function (err, doc) {
         if (err) return console.error(err);
 
@@ -24,6 +34,16 @@ module.exports = function(server)
           }).header('Access-Control-Allow-Origin', '*');
         });
       });
+    }
+  });
+
+  server.route({
+    method: 'OPTIONS',
+    path: '/raters/{id}',
+    handler: function (request, reply) {
+      console.log('OPTIONS Request on: /raters/%s', request.params.id);
+
+      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'GET, OPTIONS').header('Access-Control-Allow-Headers', 'Authorization,content-type,x-requested-with');
     }
   });
 

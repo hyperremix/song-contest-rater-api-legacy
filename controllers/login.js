@@ -15,7 +15,7 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('OPTIONS Request on: /token');
 
-      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS, HEAD').header('Access-Control-Allow-Headers', 'content-type,x-requested-with,x-api-key,X-ACCOUNT-API-KEY,X-USER-API-KEY,account_api_key,user_api_key');
+      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'POST, OPTIONS').header('Access-Control-Allow-Headers', 'content-type,x-requested-with');
     }
   });
 
@@ -43,6 +43,16 @@ module.exports = function(server)
           });
         });
       });
+    }
+  });
+
+  server.route({
+    method: 'OPTIONS',
+    path: '/reqister',
+    handler: function (request, reply) {
+      console.log('OPTIONS Request on: /reqister');
+
+      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'POST, OPTIONS').header('Access-Control-Allow-Headers', 'content-type,x-requested-with');
     }
   });
 
