@@ -1,10 +1,11 @@
 db.raters.ensureIndex({ "name": 1 }, { unique: true });
 db.ratings.ensureIndex({ "artist": 1, "rater": 1}, {unique: true});
 db.artists.ensureIndex({ "name": 1 }, { unique: true });
-db.artists.save({ "name" : "Midnight Boy", "songName" : "Don't Say No", "startNumber" : 1, "ratings": [] });
-db.artists.save({ "name" : "Caroline Wennergren", "songName" : "Black Swan", "startNumber" : 2, "ratings": [] });
-db.artists.save({ "name" : "JTR", "songName" : "Building It Up", "startNumber" : 3, "ratings": [] });
-db.artists.save({ "name" : "Hasse Andersson", "songName" : "Guld och gröna skogar", "startNumber" : 4, "ratings": [] });
-db.artists.save({ "name" : "Dinah Nah", "songName" : "Make Me (La La La)", "startNumber" : 5, "ratings": [] });
-db.artists.save({ "name" : "Annika Herlitz", "songName" : "Ett andetag", "startNumber" : 6, "ratings": [] });
-db.artists.save({ "name" : "Måns Zelmerlöw", "songName" : "Heroes", "startNumber" : 7, "ratings": [] });
+db.artists.save({ "name" : "Andreas Weise", "songName" : "Bring Out the Fire", "startNumber" : 1, "ratings": [] });
+db.artists.save({ "name" : "Linus Svenning", "songName" : "Forever Starts Today", "startNumber" : 2, "ratings": [] });
+db.artists.save({ "name" : "Hasse Andersson", "songName" : "Guld och gröna skogar", "startNumber" : 3, "ratings": [] });
+db.artists.save({ "name" : "Kristin Amparo", "songName" : "I See You", "startNumber" : 4, "ratings": [] });
+db.artists.save({ "name" : "Dolly Style", "songName" : "Hello Hi", "startNumber" : 5, "ratings": [] });
+db.artists.save({ "name" : "Dinah Nah", "songName" : "Make Me (La La La)", "startNumber" : 6, "ratings": [] });
+db.artists.save({ "name" : "Behrang Miri feat. Victor Crone", "songName" : "Det rår vi inte för", "startNumber" : 7, "ratings": [] });
+db.artists.save({ "name" : "Samir & Viktor", "songName" : "Groupie", "startNumber" : 8, "ratings": [] });
