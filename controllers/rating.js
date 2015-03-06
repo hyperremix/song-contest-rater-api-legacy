@@ -58,21 +58,36 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('POST Request on: /ratings');
 
-      var newRating = new rating(request.payload.rating);
-      newRating.save(function (err, newrating) {
+      var artist_id = request.payload.rating.artist;
+      var rater_id = request.payload.rating.rater;
+      rating.findOne({ artist: artist_id, rater: rater_id }, function(err, doc) {
         if (err) return console.error(err);
 
-        var addToSet = { $addToSet: { ratings: newRating._id } };
-        artist.update( { _id: mongoose.Types.ObjectId(request.payload.rating.artist) }, addToSet, function(err, numberAffected) {
-          if (err) return console.log(err);
-        });
-        rater.update( { _id: mongoose.Types.ObjectId(request.payload.rating.rater) }, addToSet, function(err, numberAffected) {
-          if (err) return console.log(err);
-        });
+        if(!doc) {
+          var newRating = new rating(request.payload.rating);
+          newRating.save(function (err, newrating) {
+            if (err) return console.error(err);
 
-        reply({
-          rating: newRating
-        }).header('Access-Control-Allow-Origin', '*');
+            var addToSet = { $addToSet: { ratings: newRating._id } };
+            artist.update({ _id: mongoose.Types.ObjectId(artist_id) }, addToSet, function(err, numberAffected) {
+              if (err) return console.log(err);
+            });
+
+            rater.update({ _id: mongoose.Types.ObjectId(rater_id) }, addToSet, function(err, numberAffected) {
+              if (err) return console.log(err);
+            });
+
+            reply({
+              rating: newRating
+            }).header('Access-Control-Allow-Origin', '*');
+          });
+        } else {
+          rating.update({artist: artist_id, rater: rater_id}, {song: request.payload.rating.song, singing: request.payload.rating.singing, show: request.payload.rating.show, clothes: request.payload.rating.clothes, looks: request.payload.rating.looks}, function(err, numberAffected) {
+            if (err) return console.error(err);
+
+            reply().header('Access-Control-Allow-Origin', '*');
+          });
+        }
       });
     },
     config: {

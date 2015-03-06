@@ -15,7 +15,7 @@ module.exports = function(server)
     handler: function (request, reply) {
       console.log('OPTIONS Request on: /token');
 
-      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'POST, OPTIONS').header('Access-Control-Allow-Headers', 'content-type,x-requested-with');
+      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'POST, OPTIONS').header('Access-Control-Allow-Headers', 'Authorization,content-type,x-requested-with');
     }
   });
 
@@ -38,7 +38,8 @@ module.exports = function(server)
           doc.save(function (err, docWithNewToken) {
             if (err) console.error(err);
             reply({
-              token: token
+              token: token,
+              rater_id: doc._id
             }).header('Access-Control-Allow-Origin', '*');
           });
         });
@@ -48,11 +49,11 @@ module.exports = function(server)
 
   server.route({
     method: 'OPTIONS',
-    path: '/reqister',
+    path: '/register',
     handler: function (request, reply) {
-      console.log('OPTIONS Request on: /reqister');
+      console.log('OPTIONS Request on: /register');
 
-      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'POST, OPTIONS').header('Access-Control-Allow-Headers', 'content-type,x-requested-with');
+      reply().header('Access-Control-Allow-Origin', '*').header('Access-Control-Allow-Methods', 'POST, OPTIONS').header('Access-Control-Allow-Headers', 'Authorization,content-type,x-requested-with');
     }
   });
 

@@ -21,7 +21,7 @@ module.exports = function(server)
     path: '/artists',
     handler: function (request, reply) {
       console.log('GET Request on: /artists');
-      
+
       var artists = artist.find().populate('ratings').exec(function (err, doc) {
         if (err) return console.error(err);
 
