@@ -2,7 +2,8 @@
 var hapi     = require('hapi'),
     config   = require('./config/config'),
     fs       = require('fs'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    port     = process.env.PORT || 3000;
 
 mongoose.connect(config.db);
 var db = mongoose.connection;
@@ -11,7 +12,7 @@ db.on('error', function () {
 });
 
 var server = new hapi.Server();
-server.connection({ port: 3000 });
+server.connection({ port: port });
 
 require('./config/hapi')(server)
 
