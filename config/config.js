@@ -28,8 +28,10 @@ var config = {
     app: {
       name: 'api'
     },
-    port: 3000,
-    db: 'mongodb://localhost/api-production'
+    port: 32219,
+    user: 'GJAgKwgLcpDq',
+    pass: 'tplHGbGwAFSI',
+    db: 'mongodb://mongosoup-cont002.mongosoup.de/cc_GJAgKwgLcpDq'
   }
 };
 
