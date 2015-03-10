@@ -29,9 +29,7 @@ var config = {
       name: 'api'
     },
     port: 32219,
-    user: 'GJAgKwgLcpDq',
-    pass: 'tplHGbGwAFSI',
-    db: 'mongodb://mongosoup-cont002.mongosoup.de/cc_GJAgKwgLcpDq'
+    db: 'mongodb://GJAgKwgLcpDq:tplHGbGwAFSI@mongosoup-cont002.mongosoup.de/cc_GJAgKwgLcpDq'
   }
 };
 
