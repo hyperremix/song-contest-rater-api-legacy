@@ -28,8 +28,7 @@ var config = {
     app: {
       name: 'api'
     },
-    port: 32219,
-    db: 'mongodb://GJAgKwgLcpDq:tplHGbGwAFSI@mongosoup-cont002.mongosoup.de/cc_GJAgKwgLcpDq'
+    db: 'mongodb://GJAgKwgLcpDq:tplHGbGwAFSI@mongosoup-cont002.mongosoup.de:32219/cc_GJAgKwgLcpDq'
   }
 };
 
